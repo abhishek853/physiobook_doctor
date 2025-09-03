@@ -7,7 +7,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class PhysiobookDoctorApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(PhysiobookDoctorApplication.class, args);
+
+        SpringApplication.run(PhysiobookDoctorApplication.class, args);
+        System.out.println("Doctor Application Running ");
 	}
 
 }
