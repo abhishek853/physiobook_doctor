@@ -1,1 +1,3 @@
+com\physiobook\physiobook_doctor\configuration\SwaggerConfiguration\SwaggerConfig.class
 com\physiobook\physiobook_doctor\PhysiobookDoctorApplication.class
+com\physiobook\physiobook_doctor\controller\DoctorController.class
