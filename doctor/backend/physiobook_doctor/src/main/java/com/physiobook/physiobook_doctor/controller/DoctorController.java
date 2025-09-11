@@ -9,12 +9,17 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.HashMap;
 import java.util.Map;
 
+/*         THIS IS OUR API CONTROLLER FORMAT         */
+
 
 /*
 
 we can access our Swagger API by this URL
 
 http://localhost:8080/swagger-ui/index.html#/
+
+for the production we have to use domain name or Public Ip os the server
+but we use AWS ec2 SO we use public IP
 
  */
 
