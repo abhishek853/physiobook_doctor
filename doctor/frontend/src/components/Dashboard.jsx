@@ -1,101 +1,92 @@
-// src/components/Dashboard.jsx
-import React from "react";
+const Dashboard = () => {
 
-function Dashboard() {
+  // Dummy Data (replace with API calls)
+  const patientsCount = 12;
+  const activeTherapies = 8;
+  const completedTherapies = 15;
+
+  const todayAppointments = [
+    { id: 1, patient: "Ramesh Kumar", time: "10:00 AM", status: "Completed" },
+    { id: 2, patient: "Priya Sharma", time: "11:30 AM", status: "Upcoming" },
+    { id: 3, patient: "Amit Verma", time: "2:00 PM", status: "Upcoming" },
+  ];
+
   return (
-    <div className="flex h-screen bg-gray-100">
-      {/* Sidebar */}
-      <aside className="w-64 bg-green-700 text-white flex flex-col p-6">
-        <h2 className="text-2xl font-bold mb-8">PhysioBook</h2>
-        <nav>
-          <ul className="space-y-4">
-            {["Dashboard", "Patients", "Appointments", "Therapy Records", "Reports", "Settings", "Logout"].map(
-              (item, idx) => (
-                <li
-                  key={idx}
-                  className="hover:bg-green-600 px-4 py-2 rounded-lg cursor-pointer transition duration-200"
-                >
-                  {item}
-                </li>
-              )
-            )}
-          </ul>
-        </nav>
-      </aside>
-
-      {/* Main Content */}
-      <main className="flex-1 p-8 overflow-y-auto">
-        <h1 className="text-3xl font-semibold mb-8 text-gray-800">
-          Welcome to PhysioBook Dashboard
-        </h1>
-
-        {/* Stats Section */}
-        <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
-          {[
-            { title: "Patients", value: "120 Total Patients" },
-            { title: "Appointments", value: "15 Upcoming" },
-            { title: "Therapy Sessions", value: "8 Active" },
-            { title: "Reports", value: "20 Progress Reports" },
-          ].map((stat, idx) => (
-            <div
-              key={idx}
-              className="bg-white shadow-md rounded-xl p-6 hover:shadow-lg transition duration-200"
-            >
-              <h2 className="text-lg font-medium text-gray-700">{stat.title}</h2>
-              <p className="text-gray-500 mt-2">{stat.value}</p>
+    <>
+        {/* Dashboard Content */}
+        <main className="p-6 flex-1">
+          {/* Stats Section */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+            <div className="bg-white shadow p-4 rounded-xl">
+              <h2 className="text-gray-600">Total Patients</h2>
+              <p className="text-2xl font-bold">{patientsCount}</p>
             </div>
-          ))}
-        </section>
-
-        {/* Patient Records and Appointments */}
-        <section className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {/* Recent Patients */}
-          <div className="bg-white shadow-md rounded-xl p-6">
-            <h2 className="text-xl font-semibold mb-4 text-gray-700">
-              Recent Patients
-            </h2>
-            <ul className="space-y-3">
-              {[
-                { name: "John Doe", issue: "Back Pain" },
-                { name: "Sarah Lee", issue: "Knee Injury" },
-                { name: "Michael Smith", issue: "Shoulder Rehab" },
-              ].map((patient, idx) => (
-                <li
-                  key={idx}
-                  className="flex justify-between border-b pb-2 text-gray-600"
-                >
-                  <span>{patient.name}</span>
-                  <span className="text-sm text-gray-500">{patient.issue}</span>
-                </li>
-              ))}
-            </ul>
+            <div className="bg-white shadow p-4 rounded-xl">
+              <h2 className="text-gray-600">Active Therapies</h2>
+              <p className="text-2xl font-bold">{activeTherapies}</p>
+            </div>
+            <div className="bg-white shadow p-4 rounded-xl">
+              <h2 className="text-gray-600">Completed Therapies</h2>
+              <p className="text-2xl font-bold">{completedTherapies}</p>
+            </div>
           </div>
 
-          {/* Upcoming Appointments */}
-          <div className="bg-white shadow-md rounded-xl p-6">
-            <h2 className="text-xl font-semibold mb-4 text-gray-700">
-              Upcoming Appointments
-            </h2>
-            <ul className="space-y-3">
-              {[
-                { name: "John Doe", time: "Tomorrow, 10 AM" },
-                { name: "Sarah Lee", time: "Tomorrow, 2 PM" },
-                { name: "Michael Smith", time: "Friday, 11 AM" },
-              ].map((appt, idx) => (
-                <li
-                  key={idx}
-                  className="flex justify-between border-b pb-2 text-gray-600"
-                >
-                  <span>{appt.name}</span>
-                  <span className="text-sm text-gray-500">{appt.time}</span>
-                </li>
-              ))}
-            </ul>
+          {/* Today's Appointments */}
+          <div className="bg-white shadow p-4 rounded-xl mb-6">
+            <h2 className="text-xl font-semibold mb-4">Today's Appointments</h2>
+            <table className="w-full text-left border-collapse">
+              <thead>
+                <tr className="border-b">
+                  <th className="p-2">Patient</th>
+                  <th className="p-2">Time</th>
+                  <th className="p-2">Status</th>
+                  <th className="p-2">View</th>
+                </tr>
+              </thead>
+              <tbody>
+                {todayAppointments.map((appt) => (
+                  <tr key={appt.id} className="border-b hover:bg-gray-100">
+                    <td className="p-2">{appt.patient}</td>
+                    <td className="p-2">{appt.time}</td>
+                    <td className="p-2">
+                      <span
+                        className={`px-2 py-1 rounded text-sm ${appt.status === "Upcoming"
+                            ? "bg-blue-200 text-blue-800"
+                            : "bg-green-200 text-green-800"
+                          }`}
+                      >
+                        {appt.status}
+                      </span>
+                    </td>
+                    <td className="p-2">
+                      <button className="bg-indigo-600 text-white px-3 py-1 rounded-lg text-sm hover:bg-indigo-700">
+                        View
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
-        </section>
-      </main>
-    </div>
-  );
+
+          {/* Quick Actions */}
+          <div className="bg-white shadow p-4 rounded-xl">
+            <h2 className="text-xl font-semibold mb-4">Quick Actions</h2>
+            <div className="flex gap-4">
+              <button className="bg-blue-600 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-700">
+                Create Therapy Plan
+              </button>
+              <button className="bg-green-600 text-white px-4 py-2 rounded-lg shadow hover:bg-green-700">
+                View Patient History
+              </button>
+              <button className="bg-purple-600 text-white px-4 py-2 rounded-lg shadow hover:bg-purple-700">
+                Add Notes
+              </button>
+            </div>
+          </div>
+        </main>
+    </>
+  )
 }
 
 export default Dashboard;
