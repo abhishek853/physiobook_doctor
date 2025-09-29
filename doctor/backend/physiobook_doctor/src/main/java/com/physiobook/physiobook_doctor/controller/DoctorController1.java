@@ -27,7 +27,7 @@ but we use AWS ec2 SO we use public IP
 @RestController
 @RequestMapping("/api")
 @Tag(name = "Doctor APIs", description = "APIs for doctor operations")  //this is for our class level api information having name and description
-public class DoctorController {
+public class DoctorController1 {
 
     @GetMapping("/hello")            // this is for our individual api endpoint
     @Operation(summary = "Say Hello", description = "Returns a greeting message") // that name and description
