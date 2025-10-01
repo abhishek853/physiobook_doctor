@@ -37,8 +37,7 @@ const AddReceptionist = () => {
         } catch (error) {
             console.error("Error adding receptionist:", error);
             alert("Failed to add receptionist");
-        }
-        
+        }        
     }
 
   return (

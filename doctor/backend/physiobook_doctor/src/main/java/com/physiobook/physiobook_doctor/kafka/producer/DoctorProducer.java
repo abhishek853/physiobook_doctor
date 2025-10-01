@@ -1,4 +1,4 @@
-package com.physiobook.physiobook_doctor.kafka;
+package com.physiobook.physiobook_doctor.kafka.producer;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;

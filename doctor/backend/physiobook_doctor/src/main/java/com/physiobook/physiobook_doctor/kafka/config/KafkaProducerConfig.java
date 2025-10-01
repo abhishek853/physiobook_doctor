@@ -1,4 +1,4 @@
-package com.physiobook.physiobook_doctor.kafka;
+package com.physiobook.physiobook_doctor.kafka.config;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.context.annotation.Bean;
