@@ -16,6 +16,6 @@ public class DoctorMessageService {
 
     public List<String> getReceptionistMessage() {
         return receptionistMessages;
-    }
+    }    
 
 }

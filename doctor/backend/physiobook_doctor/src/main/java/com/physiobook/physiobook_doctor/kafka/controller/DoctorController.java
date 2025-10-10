@@ -1,5 +1,4 @@
 package com.physiobook.physiobook_doctor.kafka.controller;
-import com.physiobook.physiobook_doctor.kafka.config.KafkaProducerConfig;
 import com.physiobook.physiobook_doctor.kafka.producer.DoctorProducer;
 import com.physiobook.physiobook_doctor.kafka.service.DoctorMessageService;
 
@@ -38,4 +37,5 @@ public class DoctorController {
     public List<String> getReceptionistMessages() {
         return doctorMessageService.getReceptionistMessage();
     }
+
 }
