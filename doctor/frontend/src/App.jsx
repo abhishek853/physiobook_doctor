@@ -4,6 +4,7 @@ import Dashboard from './components/Dashboard'
 import AddReceptionist from './pages/AddReceptionist'
 import Navbar from './components/Navbar'
 import Receptionists from './pages/Receptionists'
+import PatientList from './pages/PatientList'
 
 function App() {
 
@@ -16,6 +17,7 @@ function App() {
           <Route index element={<Dashboard />} />       {/* Default page */}
           <Route path="AddReceptionist" element={<AddReceptionist />} />
           <Route path='Receptionists' element={<Receptionists/>}></Route>
+          <Route path='PatientsList' element={<PatientList/>}></Route>
         </Route>
       </Routes>
     
