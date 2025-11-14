@@ -1,8 +1,8 @@
 package com.physiobook.physiobook_doctor.ManageReceptionist.controller;
 
-import com.physiobook.physiobook_doctor.ManageReceptionist.delegate.ReceptionistDelegate;
 import com.physiobook.physiobook_doctor.ManageReceptionist.dto.ReceptionistDTO;
 import com.physiobook.physiobook_doctor.ManageReceptionist.model.Receptionist;
+import com.physiobook.physiobook_doctor.ManageReceptionist.repository.ReceptionistRepository;
 import com.physiobook.physiobook_doctor.ManageReceptionist.Services.ReceptionistService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -12,8 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.HashMap;
-import java.util.Map;
 
 /*         THIS IS OUR API CONTROLLER FORMAT         */
 
@@ -33,11 +31,9 @@ public class ReceptionistController {
     @Autowired
     private ReceptionistService receptionistService;
 
-    private final ReceptionistDelegate delegate;
+    @Autowired
+    private ReceptionistRepository receptionistRepository;
 
-    public ReceptionistController(ReceptionistDelegate delegate) {
-        this.delegate = delegate;
-    }
 
     @PostMapping("/SaveReceptionists")
     @Operation(summary = "Create Receptionist", description = "Saves a new receptionist in the database")
@@ -52,4 +48,16 @@ public class ReceptionistController {
         return new ResponseEntity<>(receptionistService.fetchAllReceptionists(), HttpStatus.OK);
     }
 
+    @GetMapping("/GetReceptionistByPhone/{phone}")
+    @Operation(summary = "Get Receptionist by Phone", description = "Fetches a receptionist by their phone number")
+    public ResponseEntity<Receptionist> getReceptionistByPhone(@PathVariable String phone) {
+        Receptionist receptionist = receptionistRepository.findByPhone(phone);
+
+        if(receptionist == null) {
+            System.out.println("\n \n Receptionist not found with phone: " + phone + "\n \n");
+            return ResponseEntity.notFound().build();
+        }
+
+        return new ResponseEntity<>(receptionist, HttpStatus.OK);
+    }
 }

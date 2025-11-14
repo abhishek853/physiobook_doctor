@@ -64,7 +64,7 @@ const PatientList = () => {
   return (
     <div className="p-6">
       <div className="flex items-center justify-between mb-6">
-        <h2 className="text-2xl font-semibold">Receptionists</h2>
+        <h2 className="text-2xl font-semibold">Patients</h2>
 
         <div className="flex gap-3">
           <input

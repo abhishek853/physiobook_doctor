@@ -28,5 +28,4 @@ public class ReceptionistDelegate {
         return repository.findAll();
     }
 
-
 }

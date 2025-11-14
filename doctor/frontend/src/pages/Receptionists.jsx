@@ -38,7 +38,7 @@ const Receptionists = () => {
       setError(
         err?.response?.data?.message ||
           err.message ||
-          "Failed to fetch patients. Check backend and CORS."
+          "Failed to fetch receptionists."
       );
     } finally {
       setLoading(false);
@@ -47,9 +47,9 @@ const Receptionists = () => {
 
   // optional: delete patient (uncomment if your API supports DELETE)
   const handleDelete = async (id) => {
-    if (!confirm("Delete this patient?")) return;
+    if (!confirm("Delete this receptionist?")) return;
     try {
-      await axios.delete(`${API_BASE}/api/patients/${id}`);
+      await axios.delete(`${API_BASE}/api/receptionist/${id}`);
       setPatients((prev) => prev.filter((p) => p.id !== id));
       setFiltered((prev) => prev.filter((p) => p.id !== id));
     } catch (err) {
@@ -82,11 +82,11 @@ const Receptionists = () => {
 
       <div className="bg-white rounded-lg shadow overflow-x-auto">
         {loading ? (
-          <div className="p-6 text-center">Loading patients...</div>
+          <div className="p-6 text-center">Loading receptionists...</div>
         ) : error ? (
           <div className="p-6 text-center text-red-600">{error}</div>
         ) : filtered.length === 0 ? (
-          <div className="p-6 text-center text-gray-600">No patients found.</div>
+          <div className="p-6 text-center text-gray-600">No receptionists found.</div>
         ) : (
           <table className="min-w-full table-auto">
             <thead className="bg-gray-100">
@@ -114,9 +114,8 @@ const Receptionists = () => {
                     <div className="flex gap-2">
                       <button
                         onClick={() => {
-                          // navigate to view page OR open modal
-                          // e.g., useNavigate(`/patients/${p.id}`) in parent
-                          alert("Open patient details for: " + (p.name || p.id));
+                          // navigate to view page OR open modal                        
+                          alert("Open receptionist details for: " + (p.name || p.id));
                         }}
                         className="text-sm px-3 py-1 rounded bg-indigo-600 text-white hover:bg-indigo-700"
                       >

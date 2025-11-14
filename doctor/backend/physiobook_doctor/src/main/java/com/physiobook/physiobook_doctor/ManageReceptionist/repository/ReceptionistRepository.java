@@ -6,6 +6,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ReceptionistRepository extends JpaRepository<Receptionist, Long> {
 
-
-    // we can create our costume repository methode here
+    Receptionist findByPhone(String phone);
 }
