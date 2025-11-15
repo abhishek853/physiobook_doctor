@@ -19,7 +19,7 @@ function App() {
           <Route path="AddReceptionist" element={<AddReceptionist />} />
           <Route path='Receptionists' element={<Receptionists/>}></Route>
           <Route path='PatientsList' element={<PatientList/>}></Route>  
-          <Route path='PatientsList/patient' element={<Patient/>}></Route>  
+<Route path="PatientsList/patient/:id" element={<Patient />} />
         </Route>
       </Routes>
     
