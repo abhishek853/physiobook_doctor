@@ -10,7 +10,6 @@ export default function Patient() {
   const [patient, setPatient] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // Backend Data
   const [mainTherapies, setMainTherapies] = useState([]);
   const [subTherapies, setSubTherapies] = useState([]);
 
@@ -19,15 +18,11 @@ export default function Patient() {
   const [duration, setDuration] = useState("");
   const [medicines, setMedicines] = useState("");
 
-  // ⭐ ADDED — saved therapies from DB
   const [savedTherapies, setSavedTherapies] = useState([]);
 
-  // ⭐ ADDED — all loaded sub therapies
-  const [allSubTherapies, setAllSubTherapies] = useState([]);
+  const [showModal, setShowModal] = useState(false);
 
-  // =============================
-  // LOAD PATIENT
-  // =============================
+  // Load patient details
   useEffect(() => {
     axios
       .get(`${API_BASE}/api/patient/${patientId}`)
@@ -35,9 +30,7 @@ export default function Patient() {
       .finally(() => setLoading(false));
   }, [patientId]);
 
-  // =============================
-  // LOAD EXISTING SAVED THERAPIES
-  // =============================
+  // Load saved therapies
   const loadSavedTherapies = async () => {
     try {
       const res = await axios.get(
@@ -49,14 +42,11 @@ export default function Patient() {
     }
   };
 
-  // ⭐ load on page open
   useEffect(() => {
     if (patientId) loadSavedTherapies();
   }, [patientId]);
 
-  // =============================
-  // LOAD MAIN THERAPIES
-  // =============================
+  // Load main therapies
   useEffect(() => {
     axios
       .get(`${API_BASE}/api/PatientTherapyDetails/mainTherapy`)
@@ -64,11 +54,9 @@ export default function Patient() {
       .catch(() => alert("Failed to load main therapies"));
   }, []);
 
-  // =============================
-  // LOAD SUB THERAPIES BASED ON MAIN
-  // =============================
+  // Load sub therapies
   useEffect(() => {
-    if (!selectedMain || selectedMain === "") {
+    if (!selectedMain) {
       setSubTherapies([]);
       return;
     }
@@ -77,25 +65,15 @@ export default function Patient() {
       .get(
         `${API_BASE}/api/PatientTherapyDetails/therapyType/mainTherapy/${selectedMain}`
       )
-      .then((res) => {
-        setSubTherapies(res.data);
-        setAllSubTherapies((prev) => {
-          const merged = [...prev];
-          res.data.forEach((item) => {
-            if (!merged.find((s) => s.id === item.id)) merged.push(item);
-          });
-          return merged;
-        });
-      })
+      .then((res) => setSubTherapies(res.data))
       .catch(() => alert("Failed to load sub therapies"));
   }, [selectedMain]);
 
-  // =============================
-  // ADD THERAPY (Saves instantly)
-  // =============================
   const toggleSub = (subId) => {
     setSelectedSubs((prev) =>
-      prev.includes(subId) ? prev.filter((id) => id !== subId) : [...prev, subId]
+      prev.includes(subId)
+        ? prev.filter((id) => id !== subId)
+        : [...prev, subId]
     );
   };
 
@@ -118,17 +96,15 @@ export default function Patient() {
       }
 
       alert("Therapy added successfully!");
-
-      // ⭐ reload saved therapies
       loadSavedTherapies();
 
-      // reset fields
+      setShowModal(false);
       setSelectedMain("");
       setSelectedSubs([]);
       setDuration("");
       setMedicines("");
     } catch (err) {
-      console.error("Error saving therapies:", err);
+      console.error("Error saving therapy:", err);
       alert("Failed to save therapy");
     }
   };
@@ -137,113 +113,133 @@ export default function Patient() {
 
   return (
     <div className="min-h-screen text-black p-6 bg-gray-100">
-      <div className="max-w-7xl mx-auto flex flex-col md:flex-row gap-8">
-        
-        {/* LEFT — Patient Info + Saved Therapies */}
-        <div className="w-full md:w-1/3 bg-white shadow-lg border border-purple-300 p-6 rounded-xl">
-          <h2 className="text-2xl font-bold text-purple-700 mb-4">Patient Details</h2>
+      <div className="max-w-full mx-auto">
 
-          <p className="text-lg"><b>Name:</b> {patient?.name}</p>
-          <p className="text-lg"><b>Age:</b> {patient?.age}</p>
-          <p className="text-lg"><b>Weight:</b> {patient?.weight} kg</p>
+        {/* PATIENT DETAILS SECTION */}
+        <div className="bg-white p-6 rounded-xl shadow-sm border border-purple-200 mb-6">
 
-          <h3 className="text-xl font-semibold text-purple-700 mb-3 mt-4">
-            Saved Therapies
-          </h3>
+          <div className="flex justify-between items-start">
+            <div>
+              <h2 className="text-2xl font-bold text-purple-700 mb-3">
+                Patient Details
+              </h2>
+              <p className="text-lg"><b>Name:</b> {patient?.name}</p>
+              <p className="text-lg"><b>Age:</b> {patient?.age}</p>
+              <p className="text-lg"><b>Weight:</b> {patient?.weight} kg</p>
+            </div>
 
-          <div className="bg-gray-50 border border-purple-300 rounded-lg p-3 h-64 overflow-y-auto">
-            {savedTherapies.length === 0 ? (
-              <p className="text-gray-500 text-center">No therapies yet.</p>
-            ) : (
-              savedTherapies.map((t) => (
+            <button
+              onClick={() => setShowModal(true)}
+              className="bg-purple-600 hover:bg-purple-700 text-white px-5 py-2 rounded-lg text-lg font-semibold"
+            >
+              + Add Therapy
+            </button>
+          </div>
+        </div>
+
+        {/* SAVED THERAPIES SECTION */}
+        <div className="bg-white p-6 rounded-xl shadow-sm border border-purple-200">
+          <h3 className="text-2xl font-bold text-purple-700 mb-4">Saved Therapies</h3>
+
+          {savedTherapies.length === 0 ? (
+            <p className="text-gray-500">No therapies yet.</p>
+          ) : (
+            <div className="space-y-3">
+              {savedTherapies.map((t) => (
                 <div
                   key={t.id}
-                  className="p-3 mb-2 bg-white border rounded-lg shadow-sm"
+                  className="p-4 border rounded-lg bg-gray-50"
                 >
                   <p><b>Main:</b> {t.therapyCategory.therapy}</p>
                   <p><b>Sub:</b> {t.therapyType.subTherapyName}</p>
                   <p><b>Duration:</b> {t.duration} days</p>
                   <p><b>Medicines:</b> {t.medicines}</p>
                 </div>
-              ))
-            )}
-          </div>
+              ))}
+            </div>
+          )}
         </div>
+      </div>
 
-        {/* RIGHT — Add Therapy */}
-        <div className="w-full md:w-2/3 bg-white shadow-lg rounded-xl p-6 border border-purple-300">
-          <h2 className="text-2xl font-bold text-purple-700 mb-6 text-center">
-            Add Therapy
-          </h2>
+      {/* ADD THERAPY POPUP */}
+      {showModal && (
+        <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
+          <div className="bg-white w-full max-w-lg p-6 rounded-xl shadow-lg">
 
-          {/* Main Therapy */}
-          <label className="font-semibold text-lg">Main Therapy</label>
-          <select
-            className="w-full border border-gray-400 p-3 rounded-lg mt-2 bg-white"
-            value={selectedMain}
-            onChange={(e) => setSelectedMain(e.target.value)}
-          >
-            <option value="">-- Select Main Therapy --</option>
-            {mainTherapies.map((th) => (
-              <option key={th.id} value={th.id}>
-                {th.therapy}
-              </option>
-            ))}
-          </select>
+            <h2 className="text-2xl font-bold text-purple-700 mb-5 text-center">
+              Add Therapy
+            </h2>
 
-          {/* Sub Therapy */}
-          <label className="font-semibold text-lg mt-5 block">Sub Therapies</label>
+            {/* Main Therapy */}
+            <label className="font-semibold text-lg">Main Therapy</label>
+            <select
+              className="w-full border p-3 rounded-lg mt-1"
+              value={selectedMain}
+              onChange={(e) => setSelectedMain(e.target.value)}
+            >
+              <option value="">-- Select Main Therapy --</option>
+              {mainTherapies.map((th) => (
+                <option key={th.id} value={th.id}>{th.therapy}</option>
+              ))}
+            </select>
 
-          <div className="border border-gray-400 p-3 rounded-lg mt-2 bg-white max-h-40 overflow-y-auto">
-            {selectedMain ? (
-              subTherapies.length > 0 ? (
+            {/* Sub Therapies */}
+            <label className="font-semibold text-lg mt-4 block">Sub Therapies</label>
+            <div className="border p-3 rounded-lg mt-1 max-h-40 overflow-y-auto">
+              {!selectedMain ? (
+                <p className="text-gray-500">Select a main therapy first</p>
+              ) : (
                 subTherapies.map((sub) => (
                   <div key={sub.id} className="flex items-center gap-3 mb-2">
                     <input
                       type="checkbox"
                       checked={selectedSubs.includes(sub.id)}
                       onChange={() => toggleSub(sub.id)}
-                      className="h-5 w-5 text-purple-600"
                     />
                     <span>{sub.subTherapyName}</span>
                   </div>
                 ))
-              ) : (
-                <p className="text-gray-500">Loading...</p>
-              )
-            ) : (
-              <p className="text-gray-500">Select a main therapy first</p>
-            )}
+              )}
+            </div>
+
+            {/* Duration */}
+            <label className="font-semibold text-lg mt-4 block">Duration (days)</label>
+            <input
+              type="number"
+              className="w-full border p-3 rounded-lg mt-1"
+              value={duration}
+              onChange={(e) => setDuration(e.target.value)}
+            />
+
+            {/* Medicines */}
+            <label className="font-semibold text-lg mt-4 block">Medicines</label>
+            <input
+              type="text"
+              className="w-full border p-3 rounded-lg mt-1"
+              value={medicines}
+              onChange={(e) => setMedicines(e.target.value)}
+              placeholder="Optional"
+            />
+
+            {/* Buttons */}
+            <div className="flex justify-end gap-3 mt-6">
+              <button
+                onClick={() => setShowModal(false)}
+                className="px-5 py-2 bg-gray-300 rounded-lg"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={addTherapy}
+                className="px-5 py-2 bg-purple-600 text-white rounded-lg"
+              >
+                Save Therapy
+              </button>
+            </div>
+
           </div>
-
-          {/* Duration */}
-          <label className="font-semibold text-lg mt-5 block">Duration (days)</label>
-          <input
-            type="number"
-            className="w-full border border-gray-400 p-3 rounded-lg mt-2"
-            value={duration}
-            onChange={(e) => setDuration(e.target.value)}
-          />
-
-          {/* Medicines */}
-          <label className="font-semibold text-lg mt-5 block">Medicines</label>
-          <input
-            type="text"
-            className="w-full border border-gray-400 p-3 rounded-lg mt-2"
-            value={medicines}
-            onChange={(e) => setMedicines(e.target.value)}
-            placeholder="Optional"
-          />
-
-          {/* Add Button */}
-          <button
-            onClick={addTherapy}
-            className="mt-6 w-full bg-purple-600 hover:bg-purple-700 text-white py-3 rounded-lg text-lg font-semibold"
-          >
-            + Add Therapy
-          </button>
         </div>
-      </div>
+      )}
     </div>
   );
 }
