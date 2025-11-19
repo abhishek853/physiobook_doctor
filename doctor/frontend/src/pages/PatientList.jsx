@@ -1,7 +1,5 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-
 
 const API_BASE = "http://localhost:8081";
 const PatientList = () => {
@@ -11,8 +9,6 @@ const PatientList = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [query, setQuery] = useState("");
-  const navigate = useNavigate();
-
 
   useEffect(() => {
     fetchPatients();
@@ -120,12 +116,15 @@ const PatientList = () => {
                   <td className="p-3">
                     <div className="flex gap-2">
                       <button
-                        onClick={() => navigate(`/PatientsList/patient/${p.id}`)}
+                        onClick={() => {
+                          // navigate to view page OR open modal
+                          // e.g., useNavigate(`/patients/${p.id}`) in parent
+                          alert("Open patient details for: " + (p.name || p.id));
+                        }}
                         className="text-sm px-3 py-1 rounded bg-indigo-600 text-white hover:bg-indigo-700"
                       >
                         View
                       </button>
-
 
                       <button
                         onClick={() => handleDelete(p.id)}
