@@ -1,4 +1,4 @@
-package com.physiobook.physiobook_doctor.ManageReceptionist.dto;
+package com.physiobook.physiobook_doctor.manageReceptionist.dto;
 import lombok.*;
 
 @Data

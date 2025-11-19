@@ -6,6 +6,8 @@ import Navbar from './components/Navbar'
 import Receptionists from './pages/Receptionists'
 import PatientList from './pages/PatientList'
 import Patient from './pages/Patient'
+import TherapyRecords from './pages/TherapyRecords'
+import TherapyManagement from './pages/TherapyManagement'
 
 function App() {
 
@@ -19,9 +21,11 @@ function App() {
           <Route path="AddReceptionist" element={<AddReceptionist />} />
           <Route path='Receptionists' element={<Receptionists/>}></Route>
           <Route path='PatientsList' element={<PatientList/>}></Route>  
-          <Route path='PatientsList/patient' element={<Patient/>}></Route>  
+          <Route path='PatientsList/patient/:patientId' element={<Patient/>}></Route>  
+          <Route path='TherapyRecords' element={<TherapyRecords/>}></Route>  
+          <Route path='TherapyManagement' element={<TherapyManagement/>}></Route>  
         </Route>
-      </Routes>
+      </Routes>      
     
     </>
   )

@@ -1,15 +1,16 @@
-package com.physiobook.physiobook_doctor.ManageReceptionist.controller;
+package com.physiobook.physiobook_doctor.manageReceptionist.controller;
 
-import com.physiobook.physiobook_doctor.ManageReceptionist.dto.ReceptionistDTO;
-import com.physiobook.physiobook_doctor.ManageReceptionist.model.Receptionist;
-import com.physiobook.physiobook_doctor.ManageReceptionist.repository.ReceptionistRepository;
-import com.physiobook.physiobook_doctor.ManageReceptionist.Services.ReceptionistService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import com.physiobook.physiobook_doctor.manageReceptionist.Services.ReceptionistService;
+import com.physiobook.physiobook_doctor.manageReceptionist.dto.ReceptionistDTO;
+import com.physiobook.physiobook_doctor.manageReceptionist.model.Receptionist;
+import com.physiobook.physiobook_doctor.manageReceptionist.repository.ReceptionistRepository;
 
 import java.util.List;
 

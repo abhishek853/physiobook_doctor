@@ -1,10 +1,11 @@
-package com.physiobook.physiobook_doctor.ManageReceptionist.Services;
+package com.physiobook.physiobook_doctor.manageReceptionist.Services;
 
-import com.physiobook.physiobook_doctor.ManageReceptionist.dto.ReceptionistDTO;
-import com.physiobook.physiobook_doctor.ManageReceptionist.model.Receptionist;
-import com.physiobook.physiobook_doctor.ManageReceptionist.delegate.ReceptionistDelegate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+
+import com.physiobook.physiobook_doctor.manageReceptionist.delegate.ReceptionistDelegate;
+import com.physiobook.physiobook_doctor.manageReceptionist.dto.ReceptionistDTO;
+import com.physiobook.physiobook_doctor.manageReceptionist.model.Receptionist;
 
 import java.util.List;
 

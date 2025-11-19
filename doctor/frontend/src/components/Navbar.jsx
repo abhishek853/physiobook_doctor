@@ -28,13 +28,13 @@ const Navbar = () => {
             <Link to={"/Appointments"}>
               <li className="mt-1 hover:bg-white p-2 rounded cursor-pointer">Appointments</li>
             </Link>
-            <Link>
+            <Link to={"/TherapyRecords"}>
               <li className="mt-1 hover:bg-white p-2 rounded cursor-pointer">Therapy Records</li>
             </Link>
             <Link>
               <li className="mt-1 hover:bg-white p-2 rounded cursor-pointer">Reports</li>
             </Link>
-            <Link>
+            <Link to={"/TherapyManagement"}>
               <li className="mt-1 hover:bg-white p-2 rounded cursor-pointer">Settings</li>
             </Link>
             <Link>

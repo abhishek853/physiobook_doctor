@@ -1,4 +1,4 @@
-package com.physiobook.physiobook_doctor.ManageReceptionist.model;
+package com.physiobook.physiobook_doctor.manageReceptionist.model;
 
 
 import jakarta.persistence.*;

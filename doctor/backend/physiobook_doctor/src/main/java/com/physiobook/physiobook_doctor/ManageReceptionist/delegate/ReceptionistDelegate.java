@@ -1,8 +1,9 @@
-package com.physiobook.physiobook_doctor.ManageReceptionist.delegate;
-import com.physiobook.physiobook_doctor.ManageReceptionist.dto.ReceptionistDTO;
-import com.physiobook.physiobook_doctor.ManageReceptionist.model.Receptionist;
-import com.physiobook.physiobook_doctor.ManageReceptionist.repository.ReceptionistRepository;
+package com.physiobook.physiobook_doctor.manageReceptionist.delegate;
 import org.springframework.stereotype.Component;
+
+import com.physiobook.physiobook_doctor.manageReceptionist.dto.ReceptionistDTO;
+import com.physiobook.physiobook_doctor.manageReceptionist.model.Receptionist;
+import com.physiobook.physiobook_doctor.manageReceptionist.repository.ReceptionistRepository;
 
 import java.util.List;
 
